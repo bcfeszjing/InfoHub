@@ -4,6 +4,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    text-decoration: none; /* Remove underline from all text */
 }
 
 header {
@@ -35,6 +37,7 @@ header {
 h1 {
     margin: 0;
     font-size: 24px;
+    text-decoration: none; /* Remove underline from h1 text */
 }
 
 main {
@@ -45,10 +48,20 @@ main {
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding-bottom: 80px; /* Add padding to the bottom */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+.favourites-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Add gap between favourite items */
+    max-height: 80vh; /* Limit container height to 80% of viewport height */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds container height */
 }
 
 .favourite-item {
     display: flex;
+    flex-direction: column; /* Display as column */
     background-color: #f9f9f9;
     padding: 10px;
     border: 1px solid #ddd;
@@ -57,41 +70,100 @@ main {
     margin-bottom: 20px;
 }
 
-.favourite-item a {
-    text-decoration: none;
-    color: inherit;
+.date-time {
     display: flex;
-    flex: 1;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.favourite-image {
-    width: 150px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.favourite-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.favourite-title {
-    font-size: 18px;
+.date {
+    font-size: 16px;
     font-weight: bold;
-    margin-bottom: 5px;
+    white-space: nowrap; /* Prevent wrapping */
 }
 
-.favourite-description {
+.time {
     font-size: 14px;
     color: #666;
 }
 
-.date-header {
+/* Remove underline from all text links */
+a {
+    text-decoration: none;
+}
+
+/* Adjust layout for description alignment */
+.favourite-content {
+    display: flex;
+    align-items: flex-start; /* Align items vertically */
+    gap: 10px; /* Add gap between image and content */
+    flex-wrap: wrap; /* Allow items to wrap within container */
+}
+
+.favourite-image {
+    width: 150px; /* Adjust image width */
+    height: 100px; /* Adjust image height */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.news-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Expand to fill available space */
+}
+
+.news-topic {
     font-size: 18px;
     font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    overflow: hidden; /* Ensure text doesn't overflow */
+    text-overflow: ellipsis; /* Add ellipsis for long titles */
+    white-space: normal; /* Allow wrapping */
+    margin-bottom: 5px; /* Add space below topic */
 }
+
+.news-description {
+    font-size: 14px;
+    color: #666;
+    overflow: hidden; /* Ensure text doesn't overflow */
+    text-overflow: ellipsis; /* Add ellipsis for long descriptions */
+    white-space: normal; /* Allow wrapping for description */
+    word-wrap: break-word; /* Break words that exceed container width */
+    max-width: calc(100% - 160px); /* Limit text width to fit within the container */
+}
+
+.star-icon {
+    font-size: 20px;
+    color: gold;
+    align-self: flex-end; /* Align to the end of the container */
+    cursor: pointer;
+    margin-top: auto; /* Push to the bottom */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .favourite-item {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+
+    .favourite-image {
+        width: 100px; /* Adjust image width for smaller screens */
+        height: 75px; /* Adjust image height for smaller screens */
+    }
+
+    .news-topic {
+        font-size: 16px; /* Decrease font size for news topic */
+    }
+
+    .news-description {
+        font-size: 12px; /* Decrease font size for news description */
+        max-width: 100%; /* Ensure description text fits within the container */
+    }
+}
+
+
+
+
+

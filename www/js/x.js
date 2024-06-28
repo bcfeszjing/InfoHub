@@ -1,11 +1,21 @@
 document.addEventListener("DOMContentLoaded", function() {
+    const logoutButton = document.getElementById('logout');
+    
+    if (logoutButton) {
+        logoutButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            // Perform any additional logout operations here if needed
+            window.location.href = 'index.html';
+        });
+    }
+
     const newsContainer = document.getElementById('news-container');
     const readMoreButton = document.getElementById('read-more-button');
     const sidebarToggle = document.querySelector('.sidebar-toggle');
     const sidebar = document.getElementById('sidebar');
 
-    const apiKey = 'a3c2d6fa2dec41c9b8051d7063b64019';
-    const apiUrl = `https://newsapi.org/v2/everything?q=tesla&from=2024-05-25&sortBy=publishedAt&language=en&apiKey=${apiKey}&pageSize=5`;
+    const apiKey = '2a3d2eefe97c4b41adb7f2c96a076572';
+    const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
 
     // Toggle sidebar visibility
     sidebarToggle.addEventListener('click', function() {
@@ -15,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            const articles = data.articles;
+            const articles = data.articles.slice(0, 5).filter(article => !isRemoved(article));
             articles.forEach(article => {
                 const newsItem = document.createElement('div');
                 newsItem.classList.add('news-item');
@@ -27,6 +37,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 const newsImage = document.createElement('img');
                 newsImage.classList.add('news-image');
                 newsImage.src = article.urlToImage || 'default-image.jpg'; // Fallback to a default image if no image is provided.
+                newsImage.onerror = function() {
+                    this.src = 'img/news_en_1920x1080.jpg';
+                };
 
                 const newsContent = document.createElement('div');
                 newsContent.classList.add('news-content');
@@ -76,6 +89,15 @@ document.addEventListener("DOMContentLoaded", function() {
         return false;
     }
 
+    function isRemoved(article) {
+        let removed = localStorage.getItem('removed');
+        if (removed) {
+            removed = JSON.parse(removed);
+            return removed.some(rem => rem.url === article.url);
+        }
+        return false;
+    }
+
     function toggleFavourite(article, starIcon) {
         let favourites = localStorage.getItem('favourites');
         if (favourites) {
@@ -88,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
             starIcon.classList.remove('active');
             alert('News removed from favourites');
         } else {
+            article.savedAt = new Date().toISOString(); // Add savedAt property
             favourites.push(article);
             starIcon.classList.add('active');
             alert('News added to favourites');
@@ -95,9 +118,23 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem('favourites', JSON.stringify(favourites));
     }
 
+    function removeArticle(article) {
+        let removed = localStorage.getItem('removed');
+        if (removed) {
+            removed = JSON.parse(removed);
+        } else {
+            removed = [];
+        }
+        if (!isRemoved(article)) {
+            removed.push(article);
+            alert('News removed from list');
+        }
+        localStorage.setItem('removed', JSON.stringify(removed));
+    }
+
     // Footer navigation
     document.getElementById('home').addEventListener('click', function() {
-        window.location.href = 'index.html';
+        window.location.href = 'home.html';
     });
     document.getElementById('news').addEventListener('click', function() {
         window.location.href = 'news.html';

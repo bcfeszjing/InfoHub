@@ -2,9 +2,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const newsContainer = document.getElementById('news-container');
     const sidebarToggle = document.querySelector('.sidebar-toggle');
     const sidebar = document.getElementById('sidebar');
-    const apiKey = 'a3c2d6fa2dec41c9b8051d7063b64019';
+    const apiKey = '2a3d2eefe97c4b41adb7f2c96a076572';
     let page = 1;
     const pageSize = 20;
+    const displayedArticles = new Set();
 
     // Toggle sidebar visibility
     sidebarToggle.addEventListener('click', function() {
@@ -12,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function fetchNews(page) {
-        const apiUrl = `https://newsapi.org/v2/everything?q=tesla&from=2024-05-25&sortBy=publishedAt&language=en&apiKey=${apiKey}&pageSize=${pageSize}&page=${page}`;
+        const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}&page=${page}&pageSize=${pageSize}`;
 
         fetch(apiUrl)
             .then(response => response.json())
@@ -20,50 +21,54 @@ document.addEventListener("DOMContentLoaded", function() {
                 const articles = data.articles;
                 articles.forEach(article => {
                     if (article.title && article.title !== "Removed" && article.description && article.description !== "Removed") {
-                        const newsItem = document.createElement('div');
-                        newsItem.classList.add('news-item');
+                        if (!displayedArticles.has(article.url)) {
+                            displayedArticles.add(article.url);
+                            
+                            const newsItem = document.createElement('div');
+                            newsItem.classList.add('news-item');
 
-                        const newsLink = document.createElement('a');
-                        newsLink.href = article.url;
-                        newsLink.target = '_blank';
+                            const newsLink = document.createElement('a');
+                            newsLink.href = article.url;
+                            newsLink.target = '_blank';
 
-                        const newsImage = document.createElement('img');
-                        newsImage.classList.add('news-image');
-                        newsImage.src = article.urlToImage || 'default-image.jpg';
-                        newsImage.onerror = function() {
-                            this.src = 'default-image.jpg';
-                        };
+                            const newsImage = document.createElement('img');
+                            newsImage.classList.add('news-image');
+                            newsImage.src = article.urlToImage || 'default-image.jpg';
+                            newsImage.onerror = function() {
+                                this.src = 'www/img/news_en_1920x1080.jpg';
+                            };
 
-                        const newsContent = document.createElement('div');
-                        newsContent.classList.add('news-content');
+                            const newsContent = document.createElement('div');
+                            newsContent.classList.add('news-content');
 
-                        const newsTitle = document.createElement('div');
-                        newsTitle.classList.add('news-title');
-                        newsTitle.textContent = article.title;
+                            const newsTitle = document.createElement('div');
+                            newsTitle.classList.add('news-title');
+                            newsTitle.textContent = article.title;
 
-                        const newsDescription = document.createElement('div');
-                        newsDescription.classList.add('news-description');
-                        newsDescription.textContent = article.description;
+                            const newsDescription = document.createElement('div');
+                            newsDescription.classList.add('news-description');
+                            newsDescription.textContent = article.description;
 
-                        const starIcon = document.createElement('span');
-                        starIcon.classList.add('star-icon');
-                        starIcon.innerHTML = '★';
-                        if (isFavourite(article)) {
-                            starIcon.classList.add('active');
+                            const starIcon = document.createElement('span');
+                            starIcon.classList.add('star-icon');
+                            starIcon.innerHTML = '★';
+                            if (isFavourite(article)) {
+                                starIcon.classList.add('active');
+                            }
+                            starIcon.addEventListener('click', function() {
+                                toggleFavourite(article, starIcon);
+                            });
+
+                            newsContent.appendChild(newsTitle);
+                            newsContent.appendChild(newsDescription);
+
+                            newsLink.appendChild(newsImage);
+                            newsLink.appendChild(newsContent);
+
+                            newsItem.appendChild(newsLink);
+                            newsItem.appendChild(starIcon);
+                            newsContainer.appendChild(newsItem);
                         }
-                        starIcon.addEventListener('click', function() {
-                            toggleFavourite(article, starIcon);
-                        });
-
-                        newsContent.appendChild(newsTitle);
-                        newsContent.appendChild(newsDescription);
-
-                        newsLink.appendChild(newsImage);
-                        newsLink.appendChild(newsContent);
-
-                        newsItem.appendChild(newsLink);
-                        newsItem.appendChild(starIcon);
-                        newsContainer.appendChild(newsItem);
                     }
                 });
             })
@@ -91,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
             starIcon.classList.remove('active');
             alert('News removed from favourites');
         } else {
+            article.savedAt = new Date().toISOString(); // Add savedAt property
             favourites.push(article);
             starIcon.classList.add('active');
             alert('News added to favourites');
@@ -111,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Footer navigation
     document.getElementById('home').addEventListener('click', function() {
-        window.location.href = 'index.html';
+        window.location.href = 'home.html';
     });
     document.getElementById('news').addEventListener('click', function() {
         window.location.href = 'news.html';

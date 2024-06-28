@@ -2,8 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const backButton = document.getElementById('back-button');
     const favouritesContainer = document.getElementById('favourites-container');
 
+    // Function to handle back button click
     backButton.addEventListener('click', function() {
-        window.location.href = 'index.html';
+        window.location.href = 'home.html'; // Adjust the URL as needed
     });
 
     function loadFavourites() {
@@ -13,68 +14,82 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const groupedFavourites = favourites.reduce((acc, article) => {
-            const date = moment(article.savedAt).format('YYYY-MM-DD');
-            if (!acc[date]) {
-                acc[date] = [];
-            }
-            acc[date].push(article);
-            return acc;
-        }, {});
+        // Sort favourites by savedAt date
+        favourites.sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
 
-        const sortedDates = Object.keys(groupedFavourites).sort((a, b) => moment(b).diff(moment(a)));
+        favourites.forEach(article => {
+            const favouriteItem = document.createElement('a'); // Wrap in anchor tag
+            favouriteItem.classList.add('favourite-item');
+            favouriteItem.href = article.url; // Set the href to the article URL
+            favouriteItem.target = '_blank'; // Open link in new tab
 
-        sortedDates.forEach(date => {
-            const dateHeader = document.createElement('div');
-            dateHeader.classList.add('date-header');
-            dateHeader.textContent = moment(date).calendar(null, {
-                sameDay: '[Today]',
-                nextDay: '[Tomorrow]',
-                nextWeek: 'dddd',
-                lastDay: '[Yesterday]',
-                lastWeek: '[Last] dddd',
-                sameElse: 'DD/MM/YYYY'
+            const dateTimeContainer = document.createElement('div');
+            dateTimeContainer.classList.add('date-time');
+
+            const dateText = document.createElement('div');
+            dateText.classList.add('date');
+            dateText.textContent = moment(article.savedAt).format('YYYY-MM-DD');
+
+            const timeText = document.createElement('div');
+            timeText.classList.add('time');
+            timeText.textContent = moment(article.savedAt).format('h:mm A');
+
+            const newsContent = document.createElement('div');
+            newsContent.classList.add('favourite-content');
+
+            const newsDetails = document.createElement('div');
+            newsDetails.classList.add('news-details');
+
+            const newsText = document.createElement('div');
+            newsText.classList.add('news-text');
+
+            const favouriteImage = document.createElement('img');
+            favouriteImage.classList.add('favourite-image');
+            favouriteImage.src = article.urlToImage || 'img/news_en_1920x1080.jpg';
+            favouriteImage.onerror = function() {
+                this.src = 'img/news_en_1920x1080.jpg';
+            };
+
+            const newsTopic = document.createElement('div');
+            newsTopic.classList.add('news-topic');
+            newsTopic.textContent = article.title;
+
+            const newsDescription = document.createElement('div');
+            newsDescription.classList.add('news-description');
+            newsDescription.textContent = article.description;
+
+            // Create star icon for unfavouriting
+            const starIcon = document.createElement('span');
+            starIcon.classList.add('star-icon', 'active');
+            starIcon.innerHTML = '★';
+            starIcon.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                removeFavourite(article);
+                favouriteItem.remove();
             });
 
-            favouritesContainer.appendChild(dateHeader);
-
-            groupedFavourites[date].forEach(article => {
-                const favouriteItem = document.createElement('div');
-                favouriteItem.classList.add('favourite-item');
-
-                const favouriteLink = document.createElement('a');
-                favouriteLink.href = article.url;
-                favouriteLink.target = '_blank';
-
-                const favouriteImage = document.createElement('img');
-                favouriteImage.classList.add('favourite-image');
-                favouriteImage.src = article.urlToImage || '../img/defaultImage.png';
-                favouriteImage.onerror = function() {
-                    this.src = '../img/defaultImage.png';
-                };
-
-                const favouriteContent = document.createElement('div');
-                favouriteContent.classList.add('favourite-content');
-
-                const favouriteTitle = document.createElement('div');
-                favouriteTitle.classList.add('favourite-title');
-                favouriteTitle.textContent = article.title;
-
-                const favouriteDescription = document.createElement('div');
-                favouriteDescription.classList.add('favourite-description');
-                favouriteDescription.textContent = article.description;
-
-                favouriteContent.appendChild(favouriteTitle);
-                favouriteContent.appendChild(favouriteDescription);
-
-                favouriteLink.appendChild(favouriteImage);
-                favouriteLink.appendChild(favouriteContent);
-
-                favouriteItem.appendChild(favouriteLink);
-                favouritesContainer.appendChild(favouriteItem);
-            });
+            favouriteItem.appendChild(dateTimeContainer);
+            dateTimeContainer.appendChild(dateText);
+            dateTimeContainer.appendChild(timeText);
+            favouriteItem.appendChild(newsContent);
+            newsContent.appendChild(favouriteImage);
+            newsContent.appendChild(newsDetails);
+            newsDetails.appendChild(newsText);
+            newsText.appendChild(newsTopic);
+            newsText.appendChild(newsDescription);
+            favouriteItem.appendChild(starIcon);
+            favouritesContainer.appendChild(favouriteItem);
         });
+    }
+
+    function removeFavourite(article) {
+        let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+        favourites = favourites.filter(fav => fav.url !== article.url);
+        localStorage.setItem('favourites', JSON.stringify(favourites));
+        alert('News removed from favourites');
     }
 
     loadFavourites();
 });
+
+
