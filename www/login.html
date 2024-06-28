@@ -3,31 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="css/signup.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <div class="signup-container">
-        <h2>Create an Account</h2>
-        <form action="index.php" method="POST" id="signupForm">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="login.php" method="post" id="loginForm">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Sign Up</button>
+            <button type="submit">Log In</button>
         </form>
-        <div class="login-link">
-            <p>Already have an account? <a href="login.html">Log in</a></p>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="index.html">Sign Up</a></p>
         </div>
     </div>
 </body>
 </html>
-

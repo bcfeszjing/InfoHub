@@ -150,20 +150,3 @@ footer {
     margin: 5px 0 0;
     font-size: 12px;
 }
-
-/* Read More button */
-#read-more-button {
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#read-more-button:hover {
-    background-color: #0056b3;
-}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News</title>
+    <link rel="stylesheet" href="css/x.css">
+</head>
+<body>
+    <header>
+        <h1>News App</h1>
+        <div class="sidebar-toggle">
+            ☰
+        </div>
+        <div class="sidebar" id="sidebar">
+            <a href="favourite.html">Favourites</a>
+            <a href="#" id="logout">Logout</a>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Latest News</h2>
+        <div id="news-container" class="news-container">
+            <!-- News articles will be appended here by JavaScript -->
+        </div>
+        <button id="read-more-button" class="read-more-button">Read More</button>
+    </div>
+    <footer>
+        <div class="footer-item active" id="home">
+            <span>🏠</span>
+            <p>Home</p>
+        </div>
+        <div class="footer-item" id="news">
+            <span>📰</span>
+            <p>News</p>
+        </div>
+        <div class="footer-item" id="weather">
+            <span>☀️</span>
+            <p>Weather</p>
+        </div>
+        <div class="footer-item" id="stock">
+            <span>📈</span>
+            <p>Stock</p>
+        </div>
+    </footer>
+    <script src="js/x.js"></script>
+</body>
+</html>
