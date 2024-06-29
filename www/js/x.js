@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const sidebarToggle = document.querySelector('.sidebar-toggle');
     const sidebar = document.getElementById('sidebar');
 
-    const apiKey = '2a3d2eefe97c4b41adb7f2c96a076572';
+    const apiKey = '4f59e033ff7946d485e13a36d7e798ec';
     const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
 
     // Toggle sidebar visibility

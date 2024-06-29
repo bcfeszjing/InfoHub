@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const newsContainer = document.getElementById('news-container');
     const sidebarToggle = document.querySelector('.sidebar-toggle');
     const sidebar = document.getElementById('sidebar');
-    const apiKey = '2a3d2eefe97c4b41adb7f2c96a076572';
+    const apiKey = '4f59e033ff7946d485e13a36d7e798ec';
     let page = 1;
     const pageSize = 20;
     const displayedArticles = new Set();
