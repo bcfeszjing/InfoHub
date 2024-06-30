@@ -1,0 +1,115 @@
+/* Additional styles specific to stockData page */
+
+/* Back icon */
+.back-icon {
+    width: 30px;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+/* Header styling */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    color: #fff;
+    padding: 18px 0;
+    text-align: center;
+    font-size: 1.75rem;
+    background: #5372F0;
+    margin: 0;
+}
+
+.header-content h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Stock details section */
+#stock-details {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.stock-box {
+    width: 80%;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.stock-box h2 {
+    color: #007BFF;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.stock-info {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.info-item {
+    flex: 1;
+    padding: 10px;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #555;
+}
+
+.info-value {
+    color: #333;
+    font-size: 1.2em;
+}
+
+/* Stock chart section */
+#stock-chart {
+    margin-top: 30px;
+}
+
+#chart-controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#time-period {
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    margin-left: 10px;
+}
+
+#chart-container {
+    max-width: 800px;
+    height: 180px; /* Adjusted height to make the Y-axis longer */
+    margin: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+#chart-container canvas {
+    max-width: 100%;
+    height: 100%;
+}
+
+/* Chart.js line chart styling */
+.chartjs-line-chart {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latest News</title>
-    <link rel="stylesheet" href="css/home.css">
+    <title>Info Hub</title>
+    <link rel="stylesheet" href="css/x.css">
 </head>
 <body>
     <header>
-        <h1>News App</h1>
+        <h1>Info Hub</h1>
         <div class="sidebar-toggle">
             ☰
         </div>
@@ -17,6 +17,20 @@
             <a href="#" id="logout">Logout</a>
         </div>
     </header>
+    <div class="weather-card">
+            <div class="current-weather">
+                <div class="details">
+                    <h2 id="city-name"></h2>
+                    <h4 id="temperature"></h4>
+                    <h4 id="wind-speed"></h4>
+                    <h4 id="humidity"></h4>
+                </div>
+                <div class="icon">
+                    <img id="weather-icon" src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon">
+                    <h4 id="weather-description"></h4>
+                </div>
+            </div>
+    </div>
     <div class="container">
         <h2>Latest News</h2>
         <div id="news-container" class="news-container">
@@ -42,6 +56,6 @@
             <p>Stock</p>
         </div>
     </footer>
-    <script src="js/home.js"></script>
+    <script src="js/x.js"></script>
 </body>
 </html>

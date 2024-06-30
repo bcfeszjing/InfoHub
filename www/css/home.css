@@ -1,4 +1,10 @@
-/* General styling for body and container */
+/* General styling and box-sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,6 +12,7 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Header styles */
 header {
     background-color: #333;
     color: #fff;
@@ -21,22 +28,7 @@ h1 {
     font-size: 24px;
 }
 
-h2 {
-    margin: 20px 0;
-    font-size: 22px;
-    color: #333;
-}
-
-.container {
-    width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding-bottom: 80px; /* Add padding to the bottom */
-}
-
+/* Sidebar styles */
 .sidebar-toggle {
     cursor: pointer;
     font-size: 24px;
@@ -57,6 +49,61 @@ h2 {
     padding: 10px 20px;
     text-decoration: none;
     color: #333;
+}
+
+/* Weather card styles */
+.weather-card {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.current-weather {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    padding: 20px;
+    background: #5372F0;
+    text-align: center;
+}
+
+.current-weather .details {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.current-weather .details h2,
+.current-weather .details h4 {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+.current-weather .icon img {
+    max-width: 120px;
+    margin-top: -15px;
+}
+
+.current-weather .icon h4 {
+    margin-top: -10px;
+    text-transform: capitalize;
+}
+
+/* Container and news styles */
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-bottom: 80px;
 }
 
 .news-container {
@@ -118,6 +165,7 @@ h2 {
     color: gold;
 }
 
+/* Footer styles */
 footer {
     display: flex;
     justify-content: space-around;
@@ -154,7 +202,7 @@ footer {
 /* Read More button */
 #read-more-button {
     display: block;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
