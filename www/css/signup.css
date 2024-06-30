@@ -1,81 +1,82 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+    background-color: #e0f7fa;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
 }
 
-.signup-container {
-    background: white;
+.container {
+    background: #ffffff;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
 }
 
-.signup-container h2 {
-    margin-bottom: 20px;
+h1 {
+    margin-bottom: 30px;
+    color: #00796b;
     font-size: 24px;
-    color: #333;
 }
 
 .form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px;
+    width: 100px;
     text-align: left;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-.form-group input {
-    width: calc(100% - 22px);
+input {
+    flex: 1;
     padding: 10px;
-    box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
-}
-
-.form-group input:focus {
-    border-color: #007bff;
-    outline: none;
+    font-size: 16px;
 }
 
 button {
-    width: 100%;
-    padding: 12px;
+    padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #28a745;
-    color: white;
+    background: #00796b;
+    color: #fff;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background 0.3s;
+    width: 100%;
+    margin-top: 20px;
 }
 
 button:hover {
-    background-color: #218838;
+    background: #004d40;
 }
 
-.login-link {
+p {
     margin-top: 20px;
+    color: #00796b;
     font-size: 14px;
-    color: #666;
 }
 
-.login-link a {
-    color: #007bff;
+p a {
+    color: #004d40;
     text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
 }
 
-.login-link a:hover {
-    text-decoration: underline;
+p a:hover {
+    color: #00796b;
 }
