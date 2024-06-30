@@ -19,5 +19,9 @@
     "platforms": [
       "android"
     ]
+  },
+  "dependencies": {
+    "@alpacahq/alpaca-trade-api": "^3.0.1",
+    "finnhub": "^1.2.18"
   }
 }

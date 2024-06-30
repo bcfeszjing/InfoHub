@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price</title>
+    <link rel="stylesheet" href="css/stock.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Stock Price</h1>
+            <div class="search-bar">
+                <input type="text" id="stock-search" placeholder="Search for a stock...">
+                <button onclick="searchStock()">Search</button>
+            </div>
+        </header>
+        <main>
+            <section id="trending-stocks">
+                <h2>Trending Stocks</h2>
+                <ul id="trending-list"></ul>
+                <button id="view-all" onclick="expandTrending()">View All</button>
+            </section>
+            <section id="financial-news">
+                <h2>Financial News</h2>
+                <ul id="news-list"></ul>
+            </section>
+        </main>
+    </div>
+    <script src="js/stock.js"></script>
+</body>
+</html>

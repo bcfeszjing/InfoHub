@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Data</title>
+    <link rel="stylesheet" href="css/stock.css">
+    <link rel="stylesheet" href="css/stockData.css"> <!-- Additional CSS for stockData page -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <a href="stock.html"><img src="img/arrow.png" alt="Back to Stock Page" class="back-icon"></a>
+                <h1>Stock Data</h1>
+                <div class="spacer"></div> <!-- Spacer to push the header content to the center -->
+            </div>
+        </header>
+        <main>
+            <section id="stock-details">
+                <div class="stock-box">
+                    <h2 id="stock-symbol-description"></h2>
+                    <div class="stock-info">
+                        <div class="info-row">
+                            <div class="info-item">
+                                <span class="info-label">Current Price:</span>
+                                <span class="info-value" id="current-price"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">High:</span>
+                                <span class="info-value" id="high-price"></span>
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-item">
+                                <span class="info-label">Previous Close:</span>
+                                <span class="info-value" id="previous-close"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Low:</span>
+                                <span class="info-value" id="low-price"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="stock-chart">
+                <h2>Stock Chart</h2>
+                <div id="chart-controls">
+                    <label for="time-period">Select Time Period: </label>
+                    <select id="time-period">
+                        <option value="1D">1 Day</option>
+                        <option value="1W">1 Week</option>
+                        <option value="1M">1 Month</option>
+                        <option value="1Y">1 Year</option>
+                    </select>
+                </div>
+                <div id="chart-container">
+                    <canvas id="chart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Example for Chart.js -->
+    <script src="js/stockData.js"></script> <!-- Your custom JavaScript file for stockData page -->
+</body>
+</html>
