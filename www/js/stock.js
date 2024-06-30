@@ -121,7 +121,7 @@ function loadFinancialNews() {
 
 function setupFooterNavigation() {
     document.getElementById('home').addEventListener('click', () => {
-        window.location.href = 'index.html';
+        window.location.href = 'home.html';
     });
 
     document.getElementById('news').addEventListener('click', () => {
