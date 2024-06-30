@@ -333,7 +333,7 @@ function navigateTo(pageId) {
     let page;
     switch (pageId) {
         case 'home':
-            page = 'index.html';
+            page = 'home.html';
             break;
         case 'news':
             page = 'news.html';
@@ -346,7 +346,7 @@ function navigateTo(pageId) {
             page = 'stock.html';
             break;
         default:
-            page = 'index.html'; // Default to home page if pageId is unknown
+            page = 'home.html'; // Default to home page if pageId is unknown
             break;
     }
     

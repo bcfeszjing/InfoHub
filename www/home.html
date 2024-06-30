@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latest News</title>
+    <title>Info Hub</title>
     <link rel="stylesheet" href="css/x.css">
+    <link rel="stylesheet" href="css/w.css">
 </head>
 <body>
     <header>
-        <h1>News App</h1>
+        <h1>Info Hub</h1>
         <div class="sidebar-toggle">
             ☰
         </div>
@@ -17,6 +18,20 @@
             <a href="#" id="logout">Logout</a>
         </div>
     </header>
+    <div class="weather-card">
+            <div class="current-weather">
+                <div class="details">
+                    <h2 id="city-name"></h2>
+                    <h4 id="temperature"></h4>
+                    <h4 id="wind-speed"></h4>
+                    <h4 id="humidity"></h4>
+                </div>
+                <div class="icon">
+                    <img id="weather-icon" src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon">
+                    <h4 id="weather-description"></h4>
+                </div>
+            </div>
+    </div>
     <div class="container">
         <h2>Latest News</h2>
         <div id="news-container" class="news-container">
@@ -43,5 +58,8 @@
         </div>
     </footer>
     <script src="js/x.js"></script>
+    <script src="js/w.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
