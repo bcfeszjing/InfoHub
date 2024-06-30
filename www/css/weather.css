@@ -1,0 +1,252 @@
+/* Apply border-box model to all elements */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #E3F2FD;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #fff;
+    padding: 18px 0;
+    text-align: center;
+    font-size: 1.75rem;
+    background: #5372F0;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.weather-input {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.weather-input input {
+    width: 100%;
+    height: 46px;
+    outline: none;
+    margin: 10px 0 20px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.weather-input .location-btn {
+    background-color: #7a7878;
+}
+
+.weather-input .separator {
+    height: 1px;
+    width: 100%;
+    margin: 25px 0;
+    background: #c7c5c5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-input .separator::before {
+    content: "or";
+    color: #7a7a7a;
+    font-size: 1.18rem;
+    padding: 0 15px;
+    margin-top: -5px;
+    background: #E3F2FD;
+}
+
+.weather-input button {
+    width: 100%;
+    padding: 10px 0;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #5372F0;
+}
+
+.weather-data {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.weather-card {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.current-weather {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    padding: 20px;
+    background: #5372F0;
+    text-align: center;
+}
+
+.current-weather h2 {
+    font-size: 1.7rem;
+}
+
+.weather-data h4 {
+    margin-top: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.current-weather .icon img {
+    max-width: 120px;
+    margin-top: -15px;
+}
+
+.current-weather .icon h4 {
+    margin-top: -10px;
+    text-transform: capitalize;
+}
+
+.chart-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+}
+
+.forecast-container {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 70px;
+}
+
+.forecast-frame-container {
+    display: flex;
+    overflow-x: hidden;
+    gap: 15px;
+    width: 100%;
+    height: 100%;
+}
+
+.forecast-frame {
+    min-width: 100%;
+    max-width: 100%;
+    flex: 0 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+#average-temperature-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f0f0; /* Light gray background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px;
+    margin-bottom: 20px; /* Spacing between frames */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+#average-temperature {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333; /* Dark text color */
+}
+
+.forecast-frame img {
+    width: 50px;
+    height: 50px;
+}
+
+.scroll-btn {
+    background: #5372F0;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    font-size: 18px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#scroll-left {
+    left: 10px;
+}
+
+#scroll-right {
+    right: 10px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.footer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.footer-item.active {
+    color: gold;
+}
+
+.footer-item span {
+    font-size: 24px;
+}
+
+.footer-item p {
+    margin: 5px 0 0;
+    font-size: 12px;
+}

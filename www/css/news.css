@@ -1,0 +1,152 @@
+/* General styling for body and container */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+h2 {
+    margin: 20px 0;
+    font-size: 22px;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-bottom: 80px; /* Add padding to the bottom */
+}
+
+.sidebar-toggle {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.sidebar {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sidebar a {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+}
+
+.news-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.news-item {
+    display: flex;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.news-item a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex: 1;
+}
+
+.news-image {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.news-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.news-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.news-description {
+    font-size: 14px;
+    color: #666;
+}
+
+.star-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc;
+    align-self: center;
+    padding-left: 10px;
+}
+
+.star-icon.active {
+    color: gold;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.footer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.footer-item.active {
+    color: gold;
+}
+
+.footer-item span {
+    font-size: 24px;
+}
+
+.footer-item p {
+    margin: 5px 0 0;
+    font-size: 12px;
+}

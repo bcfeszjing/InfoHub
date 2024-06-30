@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-API Mobile App - Weather</title>
+    <link rel="stylesheet" href="css/weather.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <h1>Weather Forecast</h1>
+    <div class="container">
+        <div class="weather-input">
+            <h3>Enter a City Name</h3>
+            <input type="text" id="weather-location" placeholder="E.g., Kedah, Johor, Selangor">
+            <button class="search-btn" onclick="fetchWeather()">Search</button>
+            <div class="separator"></div>
+            <button class="location-btn" onclick="useCurrentLocation()">Use Current Location</button>
+        </div>
+        <div class="weather-data">
+            <div class="current-weather">
+                <div class="details">
+                    <h2 id="weather-city-name"></h2>
+                    <h4 id="weather-temperature"></h4>
+                    <h4 id="weather-wind-speed"></h4>
+                    <h4 id="weather-humidity"></h4>
+                </div>
+                <div class="icon">
+                    <img id="weather-icon" src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather-icon">
+                    <h4 id="weather-description"></h4>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="hourly-weather-chart"></canvas>
+        </div>
+        
+        <div id="average-temperature-frame" class="forecast-frame">
+            <div id="average-temperature" class="average-temperature"></div> <!-- New div for average temperature -->
+        </div>
+           
+        <div class="forecast-container">
+            <button class="scroll-btn" id="scroll-left" onclick="scrollForecast('left')">&lt;</button>
+            <div class="forecast-frame-container">
+                <div id="forecast-frame-1" class="forecast-frame"></div>
+                <div id="forecast-frame-2" class="forecast-frame"></div>
+                <div id="forecast-frame-3" class="forecast-frame"></div>
+                <div id="forecast-frame-4" class="forecast-frame"></div>
+                <div id="forecast-frame-5" class="forecast-frame"></div>
+            </div>
+            <button class="scroll-btn" id="scroll-right" onclick="scrollForecast('right')">&gt;</button>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-item active" id="home">
+            <span>🏠</span>
+            <p>Home</p>
+        </div>
+        <div class="footer-item" id="news">
+            <span>📰</span>
+            <p>News</p>
+        </div>
+        <div class="footer-item" id="weather">
+            <span>☀️</span>
+            <p>Weather</p>
+        </div>
+        <div class="footer-item" id="stock">
+            <span>📈</span>
+            <p>Stock</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/weather.js"></script> 
+</body>
+</html>
