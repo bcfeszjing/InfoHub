@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     loadTrendingStocks();
     loadFinancialNews();
+    setupFooterNavigation();
 });
 
 const stockAPIKey = 'cptbq0pr01qnvrr8s8kgcptbq0pr01qnvrr8s8l0';
 const newsAPIKey = '70c4ae411d994ea9b73cdb8fa8043eb5';
 
-// Array of colors for stock symbols
 const colors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A1', '#FF8C33', '#33FFF4', '#33FF8C', '#FFC133', '#8C33FF'];
 
 function searchStock() {
@@ -22,7 +22,6 @@ function searchStock() {
             const results = data.result;
             if (results && results.length > 0) {
                 const result = results[0];
-                // Redirect to stockData.html with query parameters or using sessionStorage
                 window.location.href = `stockData.html?symbol=${result.symbol}`;
             } else {
                 alert('Stock symbol not found');
@@ -32,7 +31,7 @@ function searchStock() {
 }
 
 function loadTrendingStocks() {
-    const trendingSymbols = ['IBM', 'AAPL', 'MSFT', 'GOOGL', 'AMZN']; // Top 5 trending stocks initially
+    const trendingSymbols = ['IBM', 'AAPL', 'MSFT', 'GOOGL', 'AMZN'];
     const trendingList = document.getElementById('trending-list');
 
     if (!trendingList) {
@@ -46,9 +45,9 @@ function loadTrendingStocks() {
         fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${stockAPIKey}`)
             .then(response => response.json())
             .then(data => {
-                const latestPrice = data.c; // 'c' is the current price in Finnhub.io response
-                const priceChange = data.d; // 'd' is the price change
-                const priceChangeColor = priceChange >= 0 ? 'green' : 'red'; // Color based on positive or negative change
+                const latestPrice = data.c;
+                const priceChange = data.d;
+                const priceChangeColor = priceChange >= 0 ? 'green' : 'red';
                 const listItem = document.createElement('li');
                 listItem.innerHTML = `
                     <a href="stockData.html?symbol=${symbol}" class="stock-symbol" style="background-color:${colors[index % colors.length]}">${symbol}</a>
@@ -62,7 +61,7 @@ function loadTrendingStocks() {
 }
 
 function expandTrending() {
-    const trendingSymbols = ['META', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NFLX', 'NVDA', 'BABA', 'JPM']; // Expanded to 10 trending stocks
+    const trendingSymbols = ['META', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NFLX', 'NVDA', 'BABA', 'JPM'];
     const trendingList = document.getElementById('trending-list');
 
     if (!trendingList) {
@@ -76,9 +75,9 @@ function expandTrending() {
         fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${stockAPIKey}`)
             .then(response => response.json())
             .then(data => {
-                const latestPrice = data.c; // 'c' is the current price in Finnhub.io response
-                const priceChange = data.d; // 'd' is the price change
-                const priceChangeColor = priceChange >= 0 ? 'green' : 'red'; // Color based on positive or negative change
+                const latestPrice = data.c;
+                const priceChange = data.d;
+                const priceChangeColor = priceChange >= 0 ? 'green' : 'red';
                 const listItem = document.createElement('li');
                 listItem.innerHTML = `
                     <a href="stockData.html?symbol=${symbol}" class="stock-symbol" style="background-color:${colors[index % colors.length]}">${symbol}</a>
@@ -118,4 +117,30 @@ function loadFinancialNews() {
             });
         })
         .catch(error => console.error('Error:', error));
+}
+
+function setupFooterNavigation() {
+    document.getElementById('home').addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
+    document.getElementById('news').addEventListener('click', () => {
+        window.location.href = 'news.html';
+    });
+
+    document.getElementById('weather').addEventListener('click', () => {
+        window.location.href = 'weather.html';
+    });
+
+    document.getElementById('stock').addEventListener('click', () => {
+        window.location.href = 'stock.html';
+    });
+}
+
+function initializeWeatherDisplay() {
+    // Weather display initialization logic
+}
+
+if (window.location.pathname.includes('weather.html')) {
+    initializeWeatherDisplay();
 }

@@ -14,6 +14,15 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+h1 {
+    color: #fff;
+    padding: 18px 0;
+    text-align: center;
+    font-size: 1.75rem;
+    background: #5372F0;
+    margin: 0;
+}
+
 header {
     text-align: center;
     margin-bottom: 20px;
@@ -212,4 +221,37 @@ header {
 .news-source {
     font-size: 0.8em;
     color: #666;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.footer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.footer-item.active {
+    color: gold;
+}
+
+.footer-item span {
+    font-size: 24px;
+}
+
+.footer-item p {
+    margin: 5px 0 0;
+    font-size: 12px;
 }
