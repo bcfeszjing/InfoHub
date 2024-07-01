@@ -31,7 +31,7 @@ async function getPositionAndFetchWeather() {
 async function fetchWeatherData(position) {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    const apiKey = '130988698af99807eda4c34a4460f215'; // Replace with your OpenWeatherMap API key
+    const apiKey = '130988698af99807eda4c34a4460f215';
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
     try {
@@ -42,12 +42,10 @@ async function fetchWeatherData(position) {
             throw new Error(data.message);
         }
 
-        updateWeatherDisplay(data); // Update weather details on the page
+        updateWeatherDisplay(data);
 
-        await fetchAndDisplayForecast(lat, lon, apiKey); // Fetch and display forecast
     } catch (error) {
         console.error('Error fetching weather data:', error);
-        // Handle error gracefully if needed
     }
 }
 
