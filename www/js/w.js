@@ -1,30 +1,71 @@
 // Function to fetch weather using geolocation
 async function fetchWeatherByGeoLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            const apiKey = '130988698af99807eda4c34a4460f215'; // Replace with your OpenWeatherMap API key
-            const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+    const permissionStatus = localStorage.getItem('geoPermission');
 
-            try {
-                const response = await fetch(weatherUrl);
-                const data = await response.json();
-
-                if (data.cod !== 200) {
-                    throw new Error(data.message);
-                }
-
-                updateWeatherDisplay(data); // Update weather details on the page
-
-                await fetchAndDisplayForecast(lat, lon, apiKey); // Fetch and display forecast
-            } catch (error) {
-                console.error('Error fetching weather data:', error);
-                // Handle error gracefully if needed
-            }
-        });
+    if (permissionStatus === 'granted') {
+        getPositionAndFetchWeather();
     } else {
-        alert('Geolocation is not supported by this browser.');
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    localStorage.setItem('geoPermission', 'granted');
+                    fetchWeatherData(position);
+                },
+                (error) => {
+                    handleGeolocationError(error);
+                    localStorage.setItem('geoPermission', 'denied');
+                }
+            );
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
+    }
+}
+
+async function getPositionAndFetchWeather() {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+        fetchWeatherData(position);
+    });
+}
+
+async function fetchWeatherData(position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    const apiKey = '130988698af99807eda4c34a4460f215'; // Replace with your OpenWeatherMap API key
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+    try {
+        const response = await fetch(weatherUrl);
+        const data = await response.json();
+
+        if (data.cod !== 200) {
+            throw new Error(data.message);
+        }
+
+        updateWeatherDisplay(data); // Update weather details on the page
+
+        await fetchAndDisplayForecast(lat, lon, apiKey); // Fetch and display forecast
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+        // Handle error gracefully if needed
+    }
+}
+
+// Function to handle geolocation errors
+function handleGeolocationError(error) {
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            alert('Location access is required for this application to work correctly. Please enable location access.');
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert('Location information is unavailable.');
+            break;
+        case error.TIMEOUT:
+            alert('The request to get user location timed out.');
+            break;
+        case error.UNKNOWN_ERROR:
+            alert('An unknown error occurred.');
+            break;
     }
 }
 
