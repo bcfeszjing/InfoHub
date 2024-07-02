@@ -1,38 +1,6 @@
-// Function to fetch weather using geolocation
-async function fetchWeatherByGeoLocation() {
-    const permissionStatus = localStorage.getItem('geoPermission');
-
-    if (permissionStatus === 'granted') {
-        getPositionAndFetchWeather();
-    } else {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                async (position) => {
-                    localStorage.setItem('geoPermission', 'granted');
-                    fetchWeatherData(position);
-                },
-                (error) => {
-                    handleGeolocationError(error);
-                    localStorage.setItem('geoPermission', 'denied');
-                }
-            );
-        } else {
-            alert('Geolocation is not supported by this browser.');
-        }
-    }
-}
-
-async function getPositionAndFetchWeather() {
-    navigator.geolocation.getCurrentPosition(async (position) => {
-        fetchWeatherData(position);
-    });
-}
-
-async function fetchWeatherData(position) {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-    const apiKey = '130988698af99807eda4c34a4460f215';
-    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+async function fetchWeatherByCity(location) {
+    const apiKey = '130988698af99807eda4c34a4460f215'; // Replace with your OpenWeatherMap API key
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
 
     try {
         const response = await fetch(weatherUrl);
@@ -42,32 +10,69 @@ async function fetchWeatherData(position) {
             throw new Error(data.message);
         }
 
-        updateWeatherDisplay(data);
+        updateWeatherDisplay(data); // Update weather details on the page
 
+        const lat = data.coord.lat;
+        const lon = data.coord.lon;
+        await fetchAndDisplayForecast(lat, lon, apiKey); // Fetch and display forecast
     } catch (error) {
         console.error('Error fetching weather data:', error);
+        // Handle error gracefully if needed
     }
 }
 
-// Function to handle geolocation errors
-function handleGeolocationError(error) {
-    switch (error.code) {
-        case error.PERMISSION_DENIED:
-            alert('Location access is required for this application to work correctly. Please enable location access.');
-            break;
-        case error.POSITION_UNAVAILABLE:
-            alert('Location information is unavailable.');
-            break;
-        case error.TIMEOUT:
-            alert('The request to get user location timed out.');
-            break;
-        case error.UNKNOWN_ERROR:
-            alert('An unknown error occurred.');
-            break;
+async function fetchWeatherByGeoLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const apiKey = '130988698af99807eda4c34a4460f215'; // Replace with your OpenWeatherMap API key
+            const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(weatherUrl);
+                const data = await response.json();
+
+                if (data.cod !== 200) {
+                    throw new Error(data.message);
+                }
+
+                updateWeatherDisplay(data); // Update weather details on the page
+
+                await fetchAndDisplayForecast(lat, lon, apiKey); // Fetch and display forecast
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                // Handle error gracefully if needed
+            }
+        }, (error) => {
+            console.error('Geolocation error:', error);
+            // Handle geolocation error
+        });
+    } else {
+        alert('Geolocation is not supported by this browser.');
     }
 }
 
-// Function to update weather details on the page
+function requestPermissions() {
+    const permissions = cordova.plugins.permissions;
+    const permissionList = [
+        permissions.ACCESS_FINE_LOCATION,
+        permissions.ACCESS_COARSE_LOCATION
+    ];
+
+    permissions.requestPermissions(permissionList, (status) => {
+        if (status.hasPermission) {
+            console.log('All permissions granted');
+            fetchWeatherByGeoLocation();
+        } else {
+            console.warn('Permissions not granted');
+            alert('You need to grant location permissions to fetch weather data.');
+        }
+    }, (error) => {
+        console.error('Permissions request error:', error);
+    });
+}
+
 function updateWeatherDisplay(data) {
     document.getElementById('city-name').innerText = `${data.name} (${moment().format('YYYY-MM-DD')})`;
     document.getElementById('temperature').innerText = `Temperature: ${data.main.temp} °C`;
@@ -77,12 +82,59 @@ function updateWeatherDisplay(data) {
     document.getElementById('weather-description').innerText = data.weather[0].description;
 }
 
-// Function to navigate between pages
+async function fetchAndDisplayForecast(lat, lon, apiKey) {
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${apiKey}&units=metric`;
+
+    try {
+        const forecastResponse = await fetch(forecastUrl);
+        const forecastData = await forecastResponse.json();
+
+        if (forecastData.cod) {
+            throw new Error(forecastData.message);
+        }
+
+        const labels = forecastData.daily.map(day => moment.unix(day.dt).format('ddd'));
+        const temps = forecastData.daily.map(day => day.temp.day);
+
+        const ctx = document.getElementById('forecast-chart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    data: temps,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+    } catch (error) {
+        console.error('Error fetching forecast data:', error);
+    }
+}
+
 function navigateTo(page) {
     window.location.href = page;
 }
 
-// Auto fetch weather on page load for index.html
 document.addEventListener('DOMContentLoaded', () => {
-    fetchWeatherByGeoLocation(); // Fetch weather using geolocation on page load
+    if (typeof cordova === 'undefined') {
+        fetchWeatherByGeoLocation();
+    } else {
+        document.addEventListener('deviceready', requestPermissions, false);
+    }
 });
+
+document.addEventListener('deviceready', () => {
+    console.log('Device is ready');
+    requestPermissions();
+}, false);

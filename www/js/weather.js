@@ -246,14 +246,6 @@ async function fetchAndDisplayHourlyWeather(lat, lon, apiKey) {
     }
 }
 
-// Function to calculate average temperature from hourly data
-function calculateAverageTemperature(hourlyData) {
-    const temps = hourlyData.map(hour => hour.main.temp);
-    const sum = temps.reduce((total, temp) => total + temp, 0);
-    const average = sum / temps.length;
-    return average.toFixed(2); // Return average temperature rounded to 2 decimal places
-}
-
 // Function to fetch and display 5-day forecast with 3-hour interval
 async function fetchAndDisplayDailyForecast(lat, lon, apiKey) {
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
@@ -299,7 +291,6 @@ async function fetchAndDisplayDailyForecast(lat, lon, apiKey) {
         console.error('Error fetching daily forecast data:', error);
     }
 }
-
 
 function scrollForecast(direction) {
     const container = document.querySelector('.forecast-frame-container');
