@@ -1,5 +1,5 @@
 async function fetchWeatherByCity(location) {
-    const apiKey = '130988698af99807eda4c34a4460f215'; // Replace with your OpenWeatherMap API key
+    const apiKey = '130988698af99807eda4c34a4460f215'; 
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
 
     try {
@@ -10,14 +10,13 @@ async function fetchWeatherByCity(location) {
             throw new Error(data.message);
         }
 
-        updateWeatherDisplay(data); // Update weather details on the page
+        updateWeatherDisplay(data);
 
         const lat = data.coord.lat;
         const lon = data.coord.lon;
-        await fetchAndDisplayForecast(lat, lon, apiKey); // Fetch and display forecast
+        await fetchAndDisplayForecast(lat, lon, apiKey);
     } catch (error) {
         console.error('Error fetching weather data:', error);
-        // Handle error gracefully if needed
     }
 }
 
@@ -26,7 +25,7 @@ async function fetchWeatherByGeoLocation() {
         navigator.geolocation.getCurrentPosition(async (position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            const apiKey = '130988698af99807eda4c34a4460f215'; // Replace with your OpenWeatherMap API key
+            const apiKey = '130988698af99807eda4c34a4460f215';
             const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
             try {
@@ -37,16 +36,14 @@ async function fetchWeatherByGeoLocation() {
                     throw new Error(data.message);
                 }
 
-                updateWeatherDisplay(data); // Update weather details on the page
+                updateWeatherDisplay(data);
 
-                await fetchAndDisplayForecast(lat, lon, apiKey); // Fetch and display forecast
+                await fetchAndDisplayForecast(lat, lon, apiKey);
             } catch (error) {
                 console.error('Error fetching weather data:', error);
-                // Handle error gracefully if needed
             }
         }, (error) => {
             console.error('Geolocation error:', error);
-            // Handle geolocation error
         });
     } else {
         alert('Geolocation is not supported by this browser.');
