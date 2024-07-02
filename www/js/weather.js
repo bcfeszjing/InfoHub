@@ -1,13 +1,10 @@
-// Function to initialize or reset the hourly weather chart
 function initializeHourlyChart() {
     const ctxHourly = document.getElementById('hourly-weather-chart').getContext('2d');
 
-    // Ensure the chart instance is properly destroyed before reinitializing
     if (window.hourlyChart) {
         window.hourlyChart.destroy();
     }
 
-    // Initialize the chart with empty data
     window.hourlyChart = new Chart(ctxHourly, {
         type: 'line',
         data: {
@@ -62,7 +59,6 @@ function initializeHourlyChart() {
     });
 }
 
-// Updated initializeWeatherDisplay function
 function initializeWeatherDisplay() {
     document.getElementById('weather-city-name').innerText = 'Unknown';
     document.getElementById('weather-temperature').innerText = 'Temperature: N/A';
@@ -71,17 +67,13 @@ function initializeWeatherDisplay() {
     document.getElementById('weather-icon').src = "https://openweathermap.org/img/wn/10d@2x.png";
     document.getElementById('weather-description').innerText = 'Scattered Clouds';
 
-    // Initialize average temperature display
     document.getElementById('average-temperature').innerText = 'Average Temperature: N/A';
 
-    // Initialize or reset the hourly weather chart
     initializeHourlyChart();
 
-    // Attempt to use current location to fetch weather
     useCurrentLocation();
 }
 
-// Function to update weather details on the page
 function updateWeatherDisplay(data) {
     document.getElementById('weather-city-name').innerText = `${data.name} (${moment().format('YYYY-MM-DD')})`;
     document.getElementById('weather-temperature').innerText = `Temperature: ${data.main.temp} °C`;
@@ -91,10 +83,9 @@ function updateWeatherDisplay(data) {
     document.getElementById('weather-description').innerText = data.weather[0].description;
 }
 
-// Function to fetch weather by city name
 async function fetchWeather() {
     const location = document.getElementById('weather-location').value;
-    const apiKey = '773d4858eb5e78a865629a9cb22d2c8d'; // New OpenWeatherMap API key
+    const apiKey = '773d4858eb5e78a865629a9cb22d2c8d';
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
 
     try {
@@ -105,25 +96,24 @@ async function fetchWeather() {
             throw new Error(data.message);
         }
 
-        updateWeatherDisplay(data); // Update weather details on the page
+        updateWeatherDisplay(data);
 
         const lat = data.coord.lat;
         const lon = data.coord.lon;
-        await fetchAndDisplayDailyForecast(lat, lon, apiKey); // Fetch and display daily forecast
-        await fetchAndDisplayHourlyWeather(lat, lon, apiKey); // Fetch and display hourly weather
+        await fetchAndDisplayDailyForecast(lat, lon, apiKey);
+        await fetchAndDisplayHourlyWeather(lat, lon, apiKey);
     } catch (error) {
         console.error('Error fetching weather data:', error);
-        initializeWeatherDisplay(); // Initialize weather display with unknown data on error
+        initializeWeatherDisplay();
     }
 }
 
-// Function to fetch weather using geolocation
 async function useCurrentLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            const apiKey = '773d4858eb5e78a865629a9cb22d2c8d'; // New OpenWeatherMap API key
+            const apiKey = '773d4858eb5e78a865629a9cb22d2c8d';
             const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
             try {
@@ -134,13 +124,13 @@ async function useCurrentLocation() {
                     throw new Error(data.message);
                 }
 
-                updateWeatherDisplay(data); // Update weather details on the page
+                updateWeatherDisplay(data);
 
-                await fetchAndDisplayDailyForecast(lat, lon, apiKey); // Fetch and display daily forecast
-                await fetchAndDisplayHourlyWeather(lat, lon, apiKey); // Fetch and display hourly weather
+                await fetchAndDisplayDailyForecast(lat, lon, apiKey);
+                await fetchAndDisplayHourlyWeather(lat, lon, apiKey);
             } catch (error) {
                 console.error('Error fetching weather data:', error);
-                initializeWeatherDisplay(); // Initialize weather display with unknown data on error
+                initializeWeatherDisplay();
             }
         });
     } else {
@@ -148,15 +138,13 @@ async function useCurrentLocation() {
     }
 }
 
-// Function to calculate average temperature from hourly data
 function calculateAverageTemperature(hourlyData) {
     const temps = hourlyData.map(hour => hour.main.temp);
     const sum = temps.reduce((total, temp) => total + temp, 0);
     const average = sum / temps.length;
-    return average.toFixed(2); // Return average temperature rounded to 2 decimal places
+    return average.toFixed(2);
 }
 
-// Function to fetch and display hourly weather
 async function fetchAndDisplayHourlyWeather(lat, lon, apiKey) {
     const hourlyUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&cnt=12`;
 
@@ -168,24 +156,21 @@ async function fetchAndDisplayHourlyWeather(lat, lon, apiKey) {
             throw new Error(hourlyData.message || 'Failed to fetch hourly weather data');
         }
 
-        // Extract labels (timestamps) and temperature data for the next 12 hours
         const labels = [];
         const temps = [];
 
         hourlyData.list.slice(0, 12).forEach(hour => {
-            const timestamp = hour.dt; // Unix timestamp of the hour
-            labels.push(moment.unix(timestamp).format('HH:mm')); // Format timestamp to HH:mm
-            temps.push(hour.main.temp); // Temperature in Celsius
+            const timestamp = hour.dt;
+            labels.push(moment.unix(timestamp).format('HH:mm'));
+            temps.push(hour.main.temp);
         });
 
         const ctx = document.getElementById('hourly-weather-chart').getContext('2d');
 
-        // Check if the chart instance exists, destroy it before reinitializing
         if (window.hourlyChart) {
             window.hourlyChart.destroy();
         }
 
-        // Create a new chart instance
         window.hourlyChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -236,25 +221,14 @@ async function fetchAndDisplayHourlyWeather(lat, lon, apiKey) {
             }
         });
 
-        // Calculate and display average temperature
         const averageTemp = calculateAverageTemperature(hourlyData.list.slice(0, 12));
         document.getElementById('average-temperature').innerHTML = `<p>Average Temperature: ${averageTemp} °C</p>`;
 
     } catch (error) {
         console.error('Error fetching hourly weather data:', error);
-        // Handle errors, e.g., display a message or log them
     }
 }
 
-// Function to calculate average temperature from hourly data
-function calculateAverageTemperature(hourlyData) {
-    const temps = hourlyData.map(hour => hour.main.temp);
-    const sum = temps.reduce((total, temp) => total + temp, 0);
-    const average = sum / temps.length;
-    return average.toFixed(2); // Return average temperature rounded to 2 decimal places
-}
-
-// Function to fetch and display 5-day forecast with 3-hour interval
 async function fetchAndDisplayDailyForecast(lat, lon, apiKey) {
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
@@ -266,16 +240,13 @@ async function fetchAndDisplayDailyForecast(lat, lon, apiKey) {
             throw new Error(data.message || 'Failed to fetch daily forecast data');
         }
 
-        // Extracting the first 5 days (including today) from the list of forecasts
-        const forecasts = data.list.slice(1, 6); // Start from index 1 to skip today
+        const forecasts = data.list.slice(1, 6);
 
-        // Get today's date in YYYY-MM-DD format
         const todayDate = moment().format('YYYY-MM-DD');
 
-        // Display forecast data for the next 5 days starting from tomorrow
         for (let i = 0; i < forecasts.length; i++) {
             const dayData = forecasts[i];
-            const dayDate = moment(todayDate).add(i + 1, 'days').format('YYYY-MM-DD'); // Increment date for each forecast frame starting from tomorrow
+            const dayDate = moment(todayDate).add(i + 1, 'days').format('YYYY-MM-DD');
             const dayName = moment(dayDate).format('dddd');
             const temp = dayData.main.temp;
             const windSpeed = dayData.wind.speed;
@@ -283,7 +254,6 @@ async function fetchAndDisplayDailyForecast(lat, lon, apiKey) {
             const icon = `https://openweathermap.org/img/wn/${dayData.weather[0].icon}.png`;
             const description = dayData.weather[0].description;
 
-            // Update forecast frame with forecast data
             document.getElementById(`forecast-frame-${i + 1}`).innerHTML =
                 `<div class="forecast-details">
                     <h3>${dayName}, ${moment(dayDate).format('MMMM D, YYYY')}</h3>
@@ -300,18 +270,16 @@ async function fetchAndDisplayDailyForecast(lat, lon, apiKey) {
     }
 }
 
-
 function scrollForecast(direction) {
     const container = document.querySelector('.forecast-frame-container');
     const frameWidth = container.querySelector('.forecast-frame').clientWidth;
     if (direction === 'left') {
-        container.scrollLeft -= frameWidth + 15; // Adding gap value to ensure smooth scrolling
+        container.scrollLeft -= frameWidth + 15;
     } else if (direction === 'right') {
-        container.scrollLeft += frameWidth + 15; // Adding gap value to ensure smooth scrolling
+        container.scrollLeft += frameWidth + 15;
     }
 }
 
-// Footer navigation
 document.getElementById('home').addEventListener('click', function() {
     navigateTo('home');
 });
@@ -328,7 +296,6 @@ document.getElementById('stock').addEventListener('click', function() {
     navigateTo('stock');
 });
 
-// Function to navigate to different pages
 function navigateTo(pageId) {
     let page;
     switch (pageId) {
@@ -340,17 +307,16 @@ function navigateTo(pageId) {
             break;
         case 'weather':
             page = 'weather.html';
-            initializeWeatherDisplay(); // Initialize weather display on weather page load
+            initializeWeatherDisplay();
             break;
         case 'stock':
             page = 'stock.html';
             break;
         default:
-            page = 'home.html'; // Default to home page if pageId is unknown
+            page = 'home.html';
             break;
     }
-    
-    // Navigate to the selected page
+
     window.location.href = page;
 }
 
